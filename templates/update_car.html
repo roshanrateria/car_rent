@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Car</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+
+</head>
+<body>
+    <h1>Update Car Details</h1>
+    <form method="POST">
+        {{ form.hidden_tag() }}
+        {{ form.make.label }} {{ form.make }}
+        {{ form.model.label }} {{ form.model }}
+        {{ form.year.label }} {{ form.year }}
+        <button type="submit">Update Car</button>
+    </form>
+    <a href="{{ url_for('car_details', car_id=car.id) }}">Back to Car Details</a>
+</body>
+</html>

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <title>{{ car.make }} {{ car.model }} ({{ car.year }})</title>
+</head>
+<body>
+    <div class="container">
+        <h1>{{ car.make }} {{ car.model }} ({{ car.year }})</h1>
+        <p>Availability: {{ 'Available' if car.available else 'Not Available' }}</p>
+        
+        <h2>Update Car</h2>
+        <a href="{{ url_for('update_car', car_id=car.id) }}">Update Car Details</a>
+        
+        <h2>Reservations</h2>
+        <ul>
+            {% for reservation in reservations %}
+                <li>{{ reservation.customer.name }} - {{ reservation.start_date }} to {{ reservation.end_date }}</li>
+            {% endfor %}
+        </ul>
+
+        <h2>Payments</h2>
+        <ul>
+            {% for payment in payments %}
+                <li>Amount: ${{ payment.amount }} (Date: {{ payment.payment_date }})</li>
+            {% endfor %}
+        </ul>
+
+        <h2>Add Reservation</h2>
+        <form method="POST">
+            {{ reservation_form.hidden_tag() }}
+            
+            <!-- Customer Dropdown -->
+            <div>
+                {{ reservation_form.customer_id.label }}<br>
+                {{ reservation_form.customer_id }}
+                {% if reservation_form.customer_id.errors %}
+                    <ul>
+                        {% for error in reservation_form.customer_id.errors %}
+                            <li style="color:red;">{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </div>
+            
+            <!-- Start Date -->
+            <div>
+                {{ reservation_form.start_date.label }}<br>
+                {{ reservation_form.start_date }}
+                {% if reservation_form.start_date.errors %}
+                    <ul>
+                        {% for error in reservation_form.start_date.errors %}
+                            <li style="color:red;">{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </div>
+            
+            <!-- End Date -->
+            <div>
+                {{ reservation_form.end_date.label }}<br>
+                {{ reservation_form.end_date }}
+                {% if reservation_form.end_date.errors %}
+                    <ul>
+                        {% for error in reservation_form.end_date.errors %}
+                            <li style="color:red;">{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </div>
+            
+            <button type="submit">Add Reservation</button>
+        </form>
+
+        <h2>Make Payment</h2>
+        <form method="POST">
+            {{ payment_form.hidden_tag() }}
+            {{ payment_form.reservation_id.label }} {{ payment_form.reservation_id }}
+            {{ payment_form.amount.label }} {{ payment_form.amount }}
+            <button type="submit">Make Payment</button>
+        </form>
+
+        <a href="{{ url_for('list_cars') }}">Back to Car List</a>
+    </div>
+</body>
+</html>

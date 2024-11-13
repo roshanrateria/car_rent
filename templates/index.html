@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+
+    <title>Car Rental System</title>
+</head>
+<body>
+    <h1>Welcome to Car Rental System</h1>
+    <ul>
+        <li><a href="{{ url_for('list_cars') }}">List Cars</a></li>
+        <li><a href="{{ url_for('add_car') }}">Add Car</a></li>
+        <li><a href="{{ url_for('add_customer') }}">Add Customer</a></li>
+    </ul>
+</body>
+</html>
